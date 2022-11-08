@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/fragment_home">
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.shrouk.newsapp.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="articles"
+            app:argType="com.shrouk.newsapp.model.Articles" />
+        <action
+            android:id="@+id/action_fragment_home_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_saved"
+        android:name="com.shrouk.newsapp.saved.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_search"
+        android:name="com.shrouk.newsapp.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.shrouk.newsapp.details.DetailsFragment"
+        android:label="DetailsFragment" >
+        <argument
+            android:name="articles"
+            app:argType="com.shrouk.newsapp.model.Articles" />
+    </fragment>
+</navigation>
