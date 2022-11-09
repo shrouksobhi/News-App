@@ -13,7 +13,7 @@ data class Articles(
 
    @ColumnInfo(name = "author")
     @SerializedName("author")
-    var author:String,
+    var author:String?,
 
    @ColumnInfo(name = "title")
    @SerializedName("title")
