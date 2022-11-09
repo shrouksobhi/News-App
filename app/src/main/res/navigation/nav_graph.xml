@@ -28,13 +28,21 @@
         android:id="@+id/fragment_search"
         android:name="com.shrouk.newsapp.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_fragment_search_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <argument
+            android:name="articles"
+            app:argType="com.shrouk.newsapp.model.Articles" />
+    </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.shrouk.newsapp.details.DetailsFragment"
         android:label="DetailsFragment" >
         <argument
             android:name="articles"
-            app:argType="com.shrouk.newsapp.model.Articles" />
+            app:argType="com.shrouk.newsapp.model.Articles"
+            app:nullable="true" />
     </fragment>
 </navigation>
