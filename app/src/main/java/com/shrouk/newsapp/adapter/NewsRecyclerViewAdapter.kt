@@ -9,12 +9,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shrouk.newsapp.R
+import com.shrouk.newsapp.interfaces.NewsOnClick
 import com.shrouk.newsapp.model.Articles
 
 
 class NewsRecyclerViewAdapter (var news: ArrayList<Articles>
-,var context :Context)
+        ,var context :Context , var newsOnClick: NewsOnClick)
     : RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder>(){
+
+    var onClickListener :NewsOnClick=newsOnClick
+
     class NewsViewHolder(itemview: View):RecyclerView.ViewHolder(itemview) {
      var image:ImageView=itemView.findViewById(R.id.imageview)
      var description: TextView =itemView.findViewById(R.id.body_text)
@@ -31,8 +35,11 @@ class NewsRecyclerViewAdapter (var news: ArrayList<Articles>
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val _news = news[position]
         Glide.with(View(context)).load(_news.urlToImage).into(holder.image)
-      holder.description.text=_news.description
+        holder.description.text=_news.description
         holder.publishedAt.text=_news.publishedAt
+        holder.itemView.setOnClickListener{
+            onClickListener.newsOnclick(_news)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -9,15 +9,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
-import com.google.android.gms.common.util.DataUtils
 import com.shrouk.newsapp.R
+import com.shrouk.newsapp.interfaces.NewsOnClick
 import com.shrouk.newsapp.adapter.HomeViewPagerAdapter
 import com.shrouk.newsapp.adapter.NewsRecyclerViewAdapter
 import com.shrouk.newsapp.databinding.FragmentHomeBinding
@@ -29,7 +29,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() , NewsOnClick {
+
 private lateinit var binding:FragmentHomeBinding
 private val homeViewModel:HomeViewModel by viewModels()
     private lateinit var skeleton:Skeleton
@@ -130,10 +131,14 @@ homeViewModel.currentEverything.observe(viewLifecycleOwner,{
     private fun installViews(list :ArrayList<Articles>) {
         skeleton.showOriginal()
         var layoutManager:LayoutManager= LinearLayoutManager(requireContext())
-        var newsRecyclerViewAdapter=NewsRecyclerViewAdapter(list,requireContext())
+        var newsRecyclerViewAdapter=NewsRecyclerViewAdapter(list,requireContext(),this)
       recyclerView.layoutManager=layoutManager
         recyclerView.adapter=newsRecyclerViewAdapter
 
+    }
+
+    override fun newsOnclick(news: Articles) {
+   findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToDetailsFragment(news))
     }
 
 }

@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -18,15 +19,16 @@ import com.shrouk.newsapp.R
 import com.shrouk.newsapp.adapter.HomeViewPagerAdapter
 import com.shrouk.newsapp.adapter.NewsRecyclerViewAdapter
 import com.shrouk.newsapp.databinding.FragmentSearchBinding
+import com.shrouk.newsapp.home.HomeFragmentDirections
 import com.shrouk.newsapp.home.HomeViewModel
+import com.shrouk.newsapp.interfaces.NewsOnClick
 import com.shrouk.newsapp.model.Articles
 import com.shrouk.newsapp.model.Status
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment() ,NewsOnClick{
  private lateinit var binding:FragmentSearchBinding
     private val searchViewModel: SearchViewModel by viewModels()
     private lateinit var skeleton: Skeleton
@@ -81,10 +83,12 @@ searchViewModel.currentSearch.observe(viewLifecycleOwner,{
     private fun installViews(list :ArrayList<Articles>) {
         skeleton.showOriginal()
         var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
-        var newsRecyclerViewAdapter= NewsRecyclerViewAdapter(list,requireContext())
+        var newsRecyclerViewAdapter= NewsRecyclerViewAdapter(list,requireContext(),this)
         recyclerView.layoutManager=layoutManager
         recyclerView.adapter=newsRecyclerViewAdapter
 
     }
+    override fun newsOnclick(news: Articles) {
+        findNavController().navigate(SearchFragmentDirections.actionFragmentSearchToDetailsFragment(news))     }
 
 }
