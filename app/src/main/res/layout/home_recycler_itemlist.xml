@@ -1,66 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-   android:layout_margin="8dp"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    app:cardElevation="6dp"
-    app:cardCornerRadius="7dp"
-    >
-    <androidx.constraintlayout.widget.ConstraintLayout
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+    <variable
+        name="article"
+        type="com.shrouk.newsapp.model.Articles" />
+
+        <variable
+            name="onClickListener"
+            type="com.shrouk.newsapp.interfaces.NewsOnClick" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:onClick="@{()->onClickListener.newsOnclick(article)}"
         android:layout_width="match_parent"
+        android:layout_margin="8dp"
         android:layout_height="wrap_content"
-        android:padding="6dp"
-        >
-        <androidx.cardview.widget.CardView
-            android:layout_width="145dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/body_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/cardview"
-            app:cardCornerRadius="7dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            >
-        <androidx.appcompat.widget.AppCompatImageView
+        app:cardElevation="6dp"
+        app:cardCornerRadius="7dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:background="@drawable/smooth_corner"
-            android:id="@+id/imageview"
-         android:scaleType="fitXY"
-            android:layout_marginEnd="0dp"
-
-            />
-        </androidx.cardview.widget.CardView>
-        <TextView
-            android:id="@+id/body_text"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cardview"
-            android:layout_margin="6dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:textColor="@color/black"
-            android:text="hi shrouk fgfgfttf gygt uuuuj njnjnj uhuhuhuhuhuhuh"
-            android:textSize="22sp"
-            android:fontFamily="@font/poppins"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="54t65 6"
-            android:textSize="18sp"
-            android:id="@+id/publishedAt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintTop_toBottomOf="@id/body_text"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:padding="6dp">
 
-</androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/body_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/cardview"
+                app:cardCornerRadius="7dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:background="@drawable/smooth_corner"
+                    android:id="@+id/imageview"
+                    android:scaleType="fitXY"
+                    app:setImage="@{article.urlToImage}"
+                    android:layout_marginEnd="0dp"
+
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/body_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cardview"
+                android:layout_margin="6dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/black"
+                 app:setDescription="@{article.description}"
+                android:textSize="22sp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:formatDate="@{article.publishedAt}"
+                android:textSize="18sp"
+                android:id="@+id/publishedAt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintTop_toBottomOf="@id/body_text" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
